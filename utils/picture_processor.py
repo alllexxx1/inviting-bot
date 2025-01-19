@@ -1,8 +1,9 @@
 import os
 
 import easyocr
-from configuration.logger import get_logger
 from PIL import Image, ImageDraw
+
+from configuration.logger import get_logger
 from configuration.settings import settings
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -34,7 +35,9 @@ def stamp_ticket(ticket_number: str | int) -> str:
     color = "red"
     draw.text(position, text, fill=color, font_size=70)
 
-    save_image_path = os.path.join(BASE_DIR, 'staticfiles', 'images', 'sent_tickets', f'ticket_{ticket_number}.jpg')
+    save_image_path = os.path.join(
+        BASE_DIR, 'staticfiles', 'images', 'sent_tickets', f'ticket_{ticket_number}.jpg'
+    )
     rgb_image.save(save_image_path)
 
     return save_image_path

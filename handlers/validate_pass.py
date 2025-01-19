@@ -4,6 +4,7 @@ from aiogram import Bot, F, Router
 from aiogram.filters import StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.types import Message
+
 from configuration.app_state import FSMRegisterUser
 from utils.full_access import give_full_access
 from utils.personal_invite_link import send_personal_link
@@ -21,13 +22,17 @@ async def validate_pass(message: Message, bot: Bot, state: FSMContext) -> Any:
     await bot.download_file(picture_to_validate.file_path, path_to_picture)
     if validate_picture_pass(path_to_picture):
         await give_full_access(user_id)
-        await message.answer('Круто! Вот ваш билетик и персональная ссылка в закрытый канал')
+        await message.answer(
+            'Круто! Вот ваш билетик и персональная ссылка в закрытый канал'
+        )
         await send_stamped_ticket_to_eligible_user(message)
         await send_personal_link(message)
         await state.clear()
     else:
-        await message.answer('На отправленном вами скриншоте нет необходимого текста.'
-                             'Попробуйте ещй раз. Если считаете, что произошла ошибка, напишите нам')
+        await message.answer('На отправленном вами скриншоте нет'
+                             'необходимого текста.'
+                             'Попробуйте ещй раз. Если считаете,'
+                             'что произошла ошибка, напишите нам')
 
 
 @router.message(StateFilter(FSMRegisterUser.send_valid_pass))

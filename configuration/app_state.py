@@ -1,6 +1,7 @@
 from aiogram import Bot, Dispatcher
 from aiogram.fsm.state import State, StatesGroup
 from aiogram.fsm.storage.memory import MemoryStorage
+
 from configuration.settings import settings
 
 storage = MemoryStorage()

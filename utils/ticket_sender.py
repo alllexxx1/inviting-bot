@@ -1,6 +1,7 @@
 import os
 
 from aiogram.types import FSInputFile, Message
+
 from configuration.logger import get_logger
 from utils.picture_processor import stamp_ticket
 

@@ -56,7 +56,10 @@ def add_user(user_id, username, full_name):
     cursor = conn.cursor()
     registered_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     try:
-        cursor.execute(SQL_QUERIES['Insert user'], (user_id, username, full_name, registered_at, False))
+        cursor.execute(
+            SQL_QUERIES['Insert user'],
+            (user_id, username, full_name, registered_at, False)
+        )
         conn.commit()
         close_connection(conn)
     except sqlite3.IntegrityError:

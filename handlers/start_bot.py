@@ -3,6 +3,7 @@ from aiogram.filters import CommandStart, StateFilter
 from aiogram.fsm.context import FSMContext
 from aiogram.fsm.state import default_state
 from aiogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
+
 from configuration.app_state import FSMRegisterUser
 from crm.db import add_user
 
@@ -15,7 +16,7 @@ GREETING_MESSAGE = (
     Для доступа к закрытому каналу вам необходимо:
     - подписаться на каналы А и Б;
     - выложить пост с текстом 'приходите на вебинар'
-    
+
     Для начала подпишитесь и подтвердите нажатием на кнопку ниже.
     '''
 )

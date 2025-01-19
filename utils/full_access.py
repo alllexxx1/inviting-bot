@@ -1,4 +1,5 @@
 from aiogram.types import Message
+
 from crm.db import is_user_eligible, update_eligibility
 
 
