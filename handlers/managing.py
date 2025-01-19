@@ -56,7 +56,8 @@ async def fetch_and_send_reminders(bot: Bot):
         try:
             await bot.send_message(
                 chat_id=user_id,
-                text="Закончите все шаги и получите доступ к крутейшему контенту!"
+                text="Закончите все шаги и получите доступ к крутейшему контенту!",
+                disable_notification=True,
             )
         except (AiogramError, Exception):
             print(f'Failed to send reminder to {user_id}')
@@ -64,5 +65,5 @@ async def fetch_and_send_reminders(bot: Bot):
 
 def start_scheduler(bot: Bot):
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(fetch_and_send_reminders, 'interval', hours=6, args=[bot])
+    scheduler.add_job(fetch_and_send_reminders, 'interval', hours=5, args=[bot])
     scheduler.start()

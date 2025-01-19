@@ -15,7 +15,8 @@ jobs:
 
       - name: Install dependencies
         run: |
-          make install
+          python3 -m pip install --upgrade pip
+          python3 -m pip install flake8
 
       - name: Run linter
         run: |

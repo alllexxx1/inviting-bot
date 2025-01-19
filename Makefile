@@ -1,5 +1,5 @@
 install:
-	pip install -r configuration/requirements.txt
+	python3 -m pip install -r configuration/requirements.txt
 
 migrate:
 	./migration.sh
