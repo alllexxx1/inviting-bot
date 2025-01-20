@@ -21,7 +21,7 @@ jobs:
 #        run: docker push inv-bot-image:latest
 
       - name: Deploy to Remote Server
-        uses: appleboy/ssh-action@v0.5.3
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
