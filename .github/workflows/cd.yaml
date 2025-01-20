@@ -2,16 +2,6 @@ name: CD
 
 on:
   workflow_dispatch:
-    inputs:
-      environment:
-        description: 'Choose deployment environment'
-        required: true
-        default: 'production'
-        type: choice
-        options:
-          - production
-          - staging
-          - development
 
 jobs:
   deploy:
