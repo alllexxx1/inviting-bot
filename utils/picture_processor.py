@@ -1,26 +1,13 @@
 import os
 
-import easyocr
 from PIL import Image, ImageDraw
 
 from configuration.logger import get_logger
-from configuration.settings import settings
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 logger = get_logger(__name__)
-
-TARGET_TEXT = settings.TARGET_TEXT
-
-
-def validate_picture_pass(picture_to_validate) -> bool:
-    reader = easyocr.Reader(['en', 'ru'])
-    picture_content = reader.readtext(picture_to_validate, detail=0)
-    picture_content = ''.join(
-        [inner_element.strip().lower() for inner_element in ''.join(
-            [element for element in picture_content])]
-    )
-    return TARGET_TEXT in picture_content
 
 
 def stamp_ticket(ticket_number: str | int) -> str:
