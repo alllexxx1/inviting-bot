@@ -8,7 +8,7 @@ RUN apt-get update && apt-get install -y \
 
 RUN python3 -m pip install --upgrade pip
 
-COPY configuration/requirements.txt  .
+COPY /configuration/requirements.txt  .
 COPY Makefile  .
 RUN make install
 
