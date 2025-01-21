@@ -27,4 +27,11 @@ jobs:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          script: whoami
+          script: |
+            echo "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" >> .env
+            echo "ADMIN1_ID=${{ secrets.ADMIN1_ID }}" >> .env
+            echo "ADMIN2_ID=${{ secrets.ADMIN2_ID }}" >> .env
+            echo "CHANNEL_ID=${{ secrets.CHANNEL_ID }}" >> .env
+            echo "CHANNEL_TO_CHECK=${{ secrets.CHANNEL_TO_CHECK }}" >> .env
+            git pull git@github.com:alllexxx1/inviting-bot.git inviting-bot-without-screenshot-validation-feature
+            docker compose --env-file .env up -d --build
