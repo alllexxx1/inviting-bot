@@ -1,9 +1,8 @@
 name: CD
 
 on:
-  - push
-branches:
-  - inviting-bot-without-screenshot-validation-feature
+  push:
+    branches: ["inviting-bot-without-screenshot-validation-feature"]
 
 jobs:
   deploy:
