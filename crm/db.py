@@ -51,14 +51,14 @@ def init_db():
         close_connection(conn)
 
 
-def add_user(user_id, username, full_name):
+def add_user(user_tg_id, username, full_name):
     conn = create_connection(DB_PATH)
     cursor = conn.cursor()
     registered_at = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     try:
         cursor.execute(
             SQL_QUERIES['Insert user'],
-            (user_id, username, full_name, registered_at, False)
+            (user_tg_id, username, full_name, False, 1, registered_at)
         )
         conn.commit()
         close_connection(conn)
@@ -67,15 +67,15 @@ def add_user(user_id, username, full_name):
     close_connection(conn)
 
 
-def drop_user(user_id):
+def drop_user(user_tg_id):
     conn = create_connection(DB_PATH)
     cursor = conn.cursor()
     try:
-        cursor.execute(SQL_QUERIES['Drop user'], (user_id,))
+        cursor.execute(SQL_QUERIES['Drop user'], (user_tg_id,))
         conn.commit()
         close_connection(conn)
     except Exception as e:
-        logger.error(f'Failed to delete user {user_id}: {e}')
+        logger.error(f'Failed to delete user {user_tg_id}: {e}')
     finally:
         close_connection(conn)
 
@@ -95,6 +95,36 @@ def fetch_users():
         close_connection(conn)
 
 
+def fetch_user_db_id(user_tg_id):
+    conn = create_connection(DB_PATH)
+    cursor = conn.cursor()
+    try:
+        db_id = cursor.execute(SQL_QUERIES['Fetch user db id'], (user_tg_id,))
+        db_id = db_id.fetchone()[0]
+        conn.commit()
+        close_connection(conn)
+        return db_id
+    except Exception as e:
+        logger.error(f'Failed to fetch the user db id (tg_id – {user_tg_id}): {e}')
+    finally:
+        close_connection(conn)
+
+
+def fetch_user_by_tg_id(user_tg_id):
+    conn = create_connection(DB_PATH)
+    cursor = conn.cursor()
+    try:
+        db_id = cursor.execute(SQL_QUERIES['Fetch user'], (user_tg_id,))
+        db_id = db_id.fetchone()[0]
+        conn.commit()
+        close_connection(conn)
+        return db_id
+    except Exception as e:
+        logger.error(f'Failed to fetch the user (tg_id – {user_tg_id}): {e}')
+    finally:
+        close_connection(conn)
+
+
 def fetch_ineligible_users():
     conn = create_connection(DB_PATH)
     cursor = conn.cursor()
@@ -110,24 +140,37 @@ def fetch_ineligible_users():
         close_connection(conn)
 
 
-def update_eligibility(user_id):
+def update_eligibility(user_tg_id):
     conn = create_connection(DB_PATH)
     cursor = conn.cursor()
     try:
-        cursor.execute(SQL_QUERIES['Update eligibility'], (True, user_id))
+        cursor.execute(SQL_QUERIES['Update eligibility'], (True, user_tg_id))
         conn.commit()
         close_connection(conn)
     except Exception as e:
-        logger.error(f'Failed to update_eligibility for user {user_id}: {e}')
+        logger.error(f'Failed to update eligibility for user {user_tg_id}: {e}')
     finally:
         close_connection(conn)
 
 
-def is_user_eligible(user_id):
+def update_reminder_count(user_tg_id):
     conn = create_connection(DB_PATH)
     cursor = conn.cursor()
     try:
-        eligibility = cursor.execute(SQL_QUERIES['Check eligibility'], (user_id,))
+        cursor.execute(SQL_QUERIES['Update reminder count'], (0, user_tg_id))
+        conn.commit()
+        close_connection(conn)
+    except Exception as e:
+        logger.error(f'Failed to update reminder counter for user {user_tg_id}: {e}')
+    finally:
+        close_connection(conn)
+
+
+def is_user_eligible(user_tg_id):
+    conn = create_connection(DB_PATH)
+    cursor = conn.cursor()
+    try:
+        eligibility = cursor.execute(SQL_QUERIES['Check eligibility'], (user_tg_id,))
         eligibility = eligibility.fetchone()[0]
         conn.commit()
         close_connection(conn)
@@ -149,3 +192,8 @@ def drop_table():
         logger.error(f'Failed to drop the table: {e}')
     finally:
         close_connection(conn)
+
+
+iu = fetch_ineligible_users()
+for u in iu:
+    print(u[6])
