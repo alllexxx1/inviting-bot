@@ -3,5 +3,20 @@ repos:
     rev: '7.1.1'
     hooks:
       - id: flake8
-        args:
-          ['--config=setup.cfg']
+
+  - repo: https://github.com/commitizen-tools/commitizen
+    rev: 'v4.1.1'
+    hooks:
+      - id: commitizen
+        stages: [commit-msg]
+#        args: ["--", "check", "--commit-msg-file"]
+#        args:
+#          - --config
+#          - |
+#            {
+#              "extends": ["@commitlint/config-conventional"],
+#              "rules": {
+#                "type-enum": [2, "always", ["feat", "fix", "docs", "chore", "style", "refactor", "perf", "test"]],
+#                "subject-case": [2, "never", ["start-case", "pascal-case"]]
+#              }
+#            }
