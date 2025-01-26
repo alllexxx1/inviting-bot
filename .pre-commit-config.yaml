@@ -9,7 +9,7 @@ repos:
     hooks:
       - id: commitizen
         stages: [commit-msg]
-#        args: ["--", "check", "--commit-msg-file"]
+        args: ["--commit-msg-file"]
 #        args:
 #          - --config
 #          - |
