@@ -19,6 +19,7 @@ logger = get_logger(__name__)
 CHANNEL_TO_CHECK = settings.CHANNEL_TO_CHECK
 
 
+# TODO: make the function check two tg channels
 @router.callback_query(
     StateFilter(FSMRegisterUser.subscribe_channels), F.data.in_(['subscribed'])
 )
@@ -35,10 +36,8 @@ async def check_tg_channels_subscription(
         else:
             await callback.message.answer(messages_for_users.NOT_SUBSCRIBED_MESSAGE)
     except Exception as e:
-        msg = f'Failed to check subscription: {e}'
-        logger.error(msg)
-        # TODO: replace the text with GENERIC_ERROR_MESSAGE
-        await callback.answer('Что-то пошло не так. Напишите нам.')
+        logger.error(f'Failed to check subscription: {e}')
+        await callback.answer(messages_for_users.GENERIC_ERROR_MESSAGE)
 
 
 @router.message(StateFilter(FSMRegisterUser.subscribe_channels))

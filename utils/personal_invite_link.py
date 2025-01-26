@@ -40,5 +40,4 @@ async def send_personal_link(message: Message) -> None:
     if invite_link:
         await message.answer(congratulation_message)
     else:
-        await message.answer('Что-то пошло не так. Напишите нам для'
-                             'получения персональной ссылки.')
+        await message.answer(messages_for_users.GENERIC_ERROR_MESSAGE)

@@ -69,7 +69,8 @@ NOT_PICTURE_MESSAGE = """
 Мы обязательно подскажем! ✨
 """
 
-GENERIC_ERROR_MESSAGE = "Упс.. что-то пошло не так. Напиши нам:"
+GENERIC_ERROR_MESSAGE = "Упс.. что-то пошло не так. Напиши нам:..."
+
 
 def get_congratulation_message(ticket_number: str, link_to_the_closed_channel: str) -> str:
     congratulation_message = f"""
