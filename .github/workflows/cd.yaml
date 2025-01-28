@@ -4,8 +4,7 @@ name: CD
 #  push:
 #    branches: ["inviting-bot-without-screenshot-validation-feature"]
 
-on:
-  workflow_dispatch:
+on: workflow_dispatch
 
 jobs:
   deploy:
