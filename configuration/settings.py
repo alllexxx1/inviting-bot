@@ -7,7 +7,6 @@ class Settings(BaseSettings):
     ADMIN2_ID: int
     CHANNEL_ID: str
     CHANNEL_TO_CHECK: str
-    TARGET_TEXT: str
 
     model_config = SettingsConfigDict(
         env_file='.env',

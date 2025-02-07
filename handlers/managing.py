@@ -7,8 +7,10 @@ from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
 from configuration.logger import get_logger
 from configuration.settings import settings
-from crm.db import fetch_ineligible_users
+from crm.db import fetch_ineligible_users, update_reminder_count
 from crm.utils import prepare_user_data
+from utils import messages_for_users
+
 
 logger = get_logger(__name__)
 
@@ -35,12 +37,7 @@ async def send_user_data(message: Message):
             user_data = prepare_user_data(txt=False)
             await message.answer(user_data)
     except (AiogramError, Exception) as e:
-        await message.reply(f"Failed to sand the report: {e}")
-
-
-@router.message(StateFilter(default_state))
-async def echo(message: Message):
-    await message.answer('Спасибо за ваше сообщение!')
+        await message.reply(f"Failed to send the report: {e}")
 
 
 @router.shutdown()
@@ -51,16 +48,19 @@ async def stop_bot(bot: Bot):
 async def fetch_and_send_reminders(bot: Bot):
     users_list = fetch_ineligible_users()
 
-    for user_id in users_list:
-        user_id = user_id[0]
-        try:
-            await bot.send_message(
-                chat_id=user_id,
-                text="Закончите все шаги и получите доступ к крутейшему контенту!",
-                disable_notification=True,
-            )
-        except (AiogramError, Exception):
-            print(f'Failed to send reminder to {user_id}')
+    for user in users_list:
+        user_tg_id = user[1]
+        reminder_count = user[5]
+        if reminder_count:
+            try:
+                await bot.send_message(
+                    chat_id=user_tg_id,
+                    text=messages_for_users.REMINDER,
+                    disable_notification=True,
+                )
+                update_reminder_count(user_tg_id)
+            except (AiogramError, Exception):
+                logger.error(f'Failed to send reminder to {user_tg_id}')
 
 
 def start_scheduler(bot: Bot):

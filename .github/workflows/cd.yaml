@@ -1,0 +1,40 @@
+name: CD
+
+#on:
+#  push:
+#    branches: ["inviting-bot-without-screenshot-validation-feature"]
+
+on: workflow_dispatch
+
+jobs:
+  deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' }}
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+#      - name: Log in to GitHub Container Registry
+#        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+#
+#      - name: Build Docker Image
+#        run: docker compose up --build
+#
+#      - name: Push Docker Image
+#        run: docker push inv-bot-image:latest
+
+      - name: Deploy to Remote Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            echo "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" >> .env
+            echo "ADMIN1_ID=${{ secrets.ADMIN1_ID }}" >> .env
+            echo "ADMIN2_ID=${{ secrets.ADMIN2_ID }}" >> .env
+            echo "CHANNEL_ID=${{ secrets.CHANNEL_ID }}" >> .env
+            echo "CHANNEL_TO_CHECK=${{ secrets.CHANNEL_TO_CHECK }}" >> .env
+            git pull git@github.com:alllexxx1/inviting-bot.git inviting-bot-without-screenshot-validation-feature
+            docker compose --env-file .env up -d --build
