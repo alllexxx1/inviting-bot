@@ -16,5 +16,3 @@ COPY . .
 
 RUN chmod a+x migration.sh
 RUN make migrate
-
-CMD ["make", "run"]
