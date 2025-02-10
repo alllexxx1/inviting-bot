@@ -36,5 +36,5 @@ jobs:
             echo "ADMIN2_ID=${{ secrets.ADMIN2_ID }}" >> .env
             echo "CHANNEL_ID=${{ secrets.CHANNEL_ID }}" >> .env
             echo "CHANNEL_TO_CHECK=${{ secrets.CHANNEL_TO_CHECK }}" >> .env
-            git pull git@github.com:alllexxx1/inviting-bot.git inviting-bot-without-screenshot-validation-feature
+            git pull git@github.com:alllexxx1/inviting-bot.git
             docker compose --env-file .env up -d --build
