@@ -30,13 +30,20 @@ async def send_user_data(message: Message):
     try:
         if message.text == '..':
             report_path = prepare_user_data(txt=True)
-            await message.bot.send_document(
-                chat_id=user_id, document=FSInputFile(report_path)
-            )
+            if report_path:
+                await message.bot.send_document(
+                    chat_id=user_id, document=FSInputFile(report_path)
+                )
+            else:
+                await message.answer('Apparently there are no users yet')
         elif message.text == '.':
             user_data = prepare_user_data(txt=False)
-            await message.answer(user_data)
+            if user_data:
+                await message.answer(user_data)
+            else:
+                await message.answer('Apparently there are no users yet')
     except (AiogramError, Exception) as e:
+        logger.error(f"Failed to send the report: {e}")
         await message.reply(f"Failed to send the report: {e}")
 
 
