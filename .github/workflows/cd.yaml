@@ -32,6 +32,7 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            cd Projects/inv-bot
             echo "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" >> .env
             echo "ADMIN1_ID=${{ secrets.ADMIN1_ID }}" >> .env
             echo "ADMIN2_ID=${{ secrets.ADMIN2_ID }}" >> .env
