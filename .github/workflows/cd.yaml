@@ -32,7 +32,7 @@ jobs:
           port: ${{ secrets.PORT }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
-            ssh-keyscan ${{ secrets.HOST }} >> ~/.ssh/known_hosts
+            ssh-keyscan -p ${{ secrets.PORT }} ${{ secrets.HOST }} >> ~/.ssh/known_hosts
             cd Projects/inv-bot
             echo "BOT_TOKEN=${{ secrets.BOT_TOKEN }}" >> .env
             echo "ADMIN1_ID=${{ secrets.ADMIN1_ID }}" >> .env
