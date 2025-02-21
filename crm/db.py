@@ -101,6 +101,7 @@ def fetch_user_db_id(user_tg_id):
     try:
         db_id = cursor.execute(SQL_QUERIES['Fetch user db id'], (user_tg_id,))
         db_id = db_id.fetchone()[0]
+        print(db_id)
         conn.commit()
         close_connection(conn)
         return db_id

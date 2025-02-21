@@ -28,10 +28,8 @@ async def generate_personal_link(
         return None
 
 
-async def send_personal_link(message: Message) -> None:
-    user_id = message.from_user.id
+async def send_personal_link(message: Message, user_id: int) -> None:
     user_personal_number = db.fetch_user_db_id(user_id)
-
     invite_link = await generate_personal_link(message, user_id, CHANNEL_ID)
     invite_link = invite_link.invite_link
     congratulation_message = messages_for_users.get_congratulation_message(

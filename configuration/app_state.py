@@ -12,4 +12,3 @@ dp = Dispatcher(storage=storage)
 
 class FSMRegisterUser(StatesGroup):
     subscribe_channels = State()
-    send_valid_pass = State()

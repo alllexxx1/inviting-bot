@@ -25,12 +25,16 @@ async def start_bot(message: Message, state: FSMContext):
     user_data = (user_id, username, full_name)
     add_user(*user_data)
 
+    markup = prepare_inline_keyboard()
+    await message.answer(messages_for_users.GREETING_MESSAGE, reply_markup=markup)
+    await state.set_state(FSMRegisterUser.subscribe_channels)
+
+
+def prepare_inline_keyboard() -> InlineKeyboardMarkup:
     subscribed_button = InlineKeyboardButton(
         text='Я подписался(ась)',
         callback_data='subscribed'
     )
     keyboard: list[list[InlineKeyboardButton]] = [[subscribed_button]]
     markup = InlineKeyboardMarkup(inline_keyboard=keyboard)
-
-    await message.answer(messages_for_users.GREETING_MESSAGE, reply_markup=markup)
-    await state.set_state(FSMRegisterUser.subscribe_channels)
+    return markup
