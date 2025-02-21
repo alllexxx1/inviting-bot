@@ -6,7 +6,8 @@ class Settings(BaseSettings):
     ADMIN1_ID: int
     ADMIN2_ID: int
     CHANNEL_ID: str
-    CHANNEL_TO_CHECK: str
+    CHANNEL1_TO_CHECK: str
+    CHANNEL2_TO_CHECK: str
 
     model_config = SettingsConfigDict(
         env_file='.env',
