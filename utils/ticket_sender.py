@@ -19,4 +19,4 @@ async def send_stamped_ticket_to_eligible_user(message: Message):
         await message.bot.send_photo(chat_id=user_id, photo=ticket)
     except Exception as e:
         logger.error(f'Failed to stamp the ticket: {e}')
-        await message.reply(messages_for_users.GENERIC_ERROR_MESSAGE)
+        await message.answer(messages_for_users.GENERIC_ERROR_MESSAGE)
