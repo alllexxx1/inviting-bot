@@ -17,7 +17,8 @@ services:
       - ${ADMIN1_ID}
       - ${ADMIN2_ID}
       - ${CHANNEL_ID}
-      - ${CHANNEL_TO_CHECK}
+      - ${CHANNEL1_TO_CHECK}
+      - ${CHANNEL2_TO_CHECK}
     command: make run
 
 volumes:
