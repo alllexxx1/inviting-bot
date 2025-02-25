@@ -30,24 +30,24 @@ async def check_tg_channels_subscription(
 ):
     user_id = callback.from_user.id
     try:
-        channel_1 = await bot.get_chat_member(CHANNEL1_TO_CHECK, user_id)
-        channel_2 = await bot.get_chat_member(CHANNEL2_TO_CHECK, user_id)
-        if channel_1.status == 'member' and channel_2.status == 'member':
+        # channel_1 = await bot.get_chat_member(CHANNEL1_TO_CHECK, user_id)
+        # channel_2 = await bot.get_chat_member(CHANNEL2_TO_CHECK, user_id)
+        # if channel_1.status == 'member' and channel_2.status == 'member':
 
-            await give_full_access(user_id)
-            await send_stamped_ticket_to_eligible_user(callback)
-            await send_personal_link(callback.message, user_id)
-            await callback.message.delete()
-            await state.clear()
+        await give_full_access(user_id)
+        await send_stamped_ticket_to_eligible_user(callback)
+        await send_personal_link(callback.message, user_id)
+        await callback.message.delete()
+        await state.clear()
 
-        else:
-            markup = prepare_inline_keyboard()
-            await callback.message.answer(
-                messages_for_users.NOT_SUBSCRIBED_MESSAGE,
-                disable_web_page_preview=True,
-                reply_markup=markup,
-                parse_mode='HTML'
-            )
+        # else:
+        #     markup = prepare_inline_keyboard()
+        #     await callback.message.answer(
+        #         messages_for_users.NOT_SUBSCRIBED_MESSAGE,
+        #         disable_web_page_preview=True,
+        #         reply_markup=markup,
+        #         parse_mode='HTML'
+        #     )
     except Exception as e:
         logger.error(f'Failed to check subscription: {e}')
         await callback.message.answer(messages_for_users.GENERIC_ERROR_MESSAGE)
