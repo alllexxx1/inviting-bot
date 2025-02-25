@@ -16,11 +16,11 @@ def stamp_ticket(ticket_number: str | int) -> str:
     rgb_image = image.convert('RGB')
 
     draw = ImageDraw.Draw(rgb_image)
-    text = f'#{ticket_number}'
+    text = str(ticket_number)
     # font = ImageFont.load_default_imagefont("arial.ttf", size=30)
-    position = (900, 330)  # (1165, 330) for a single digit number with hashtag
-    color = "red"
-    draw.text(position, text, fill=color, font_size=70)
+    position = (1180, 623)
+    color = (144, 12, 63)
+    draw.text(position, text, fill=color, font_size=50)
 
     save_image_path = os.path.join(
         BASE_DIR, 'staticfiles', 'images', 'sent_tickets', f'ticket_{ticket_number}.jpg'

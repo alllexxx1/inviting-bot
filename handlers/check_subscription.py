@@ -43,7 +43,10 @@ async def check_tg_channels_subscription(
         else:
             markup = prepare_inline_keyboard()
             await callback.message.answer(
-                messages_for_users.NOT_SUBSCRIBED_MESSAGE, reply_markup=markup
+                messages_for_users.NOT_SUBSCRIBED_MESSAGE,
+                disable_web_page_preview=True,
+                reply_markup=markup,
+                parse_mode='HTML'
             )
     except Exception as e:
         logger.error(f'Failed to check subscription: {e}')
