@@ -20,13 +20,12 @@ async def start_bot(message: Message, state: FSMContext):
     user_data = message.from_user
     user_id = user_data.id
     user = fetch_user_by_tg_id(user_id)
-    if user:
-        return
 
-    username = user_data.username
-    full_name = user_data.full_name
-    user_data = (user_id, username, full_name)
-    add_user(*user_data)
+    if not user:
+        username = user_data.username
+        full_name = user_data.full_name
+        user_data = (user_id, username, full_name)
+        add_user(*user_data)
 
     markup = prepare_inline_keyboard()
     picture = FSInputFile(os.path.join(

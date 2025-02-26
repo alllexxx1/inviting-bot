@@ -21,6 +21,8 @@ logger = get_logger(__name__)
 CHANNEL1_TO_CHECK = settings.CHANNEL1_TO_CHECK
 CHANNEL2_TO_CHECK = settings.CHANNEL2_TO_CHECK
 
+CHAT_MEMBER_STATUSES = ['member', 'creator', 'administrator']
+
 
 @router.callback_query(
     StateFilter(FSMRegisterUser.subscribe_channels), F.data.in_(['subscribed'])
@@ -32,7 +34,10 @@ async def check_tg_channels_subscription(
     try:
         channel_1 = await bot.get_chat_member(CHANNEL1_TO_CHECK, user_id)
         channel_2 = await bot.get_chat_member(CHANNEL2_TO_CHECK, user_id)
-        if channel_1.status == 'member' and channel_2.status == 'member':
+        if (
+                channel_1.status in CHAT_MEMBER_STATUSES
+                and channel_2.status in CHAT_MEMBER_STATUSES
+        ):
 
             await give_full_access(user_id)
             await send_stamped_ticket_to_eligible_user(callback)
