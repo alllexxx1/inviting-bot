@@ -44,7 +44,7 @@ async def send_user_data(message: Message):
                 await message.answer('Apparently there are no users yet')
     except (AiogramError, Exception) as e:
         logger.error(f"Failed to send the report: {e}")
-        await message.reply(f"Failed to send the report: {e}")
+        await message.answer(f"Failed to send the report: {e}")
 
 
 @router.shutdown()

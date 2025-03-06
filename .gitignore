@@ -5,3 +5,4 @@ __pycache__/
 .env
 crm/crm.db
 crm/users_report.txt
+.DS_store

@@ -1,6 +1,3 @@
--- Drop table
-DROP TABLE IF EXISTS users;
-
 -- Create table
 CREATE TABLE IF NOT EXISTS users (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
