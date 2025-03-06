@@ -7,7 +7,7 @@ services:
     container_name: inv-bot-compose
     volumes:
       - ./staticfiles:/app/staticfiles
-      - crm:app/srm
+      - crm:/app/crm
     ports:
       - "8000:8000"
     env_file:
