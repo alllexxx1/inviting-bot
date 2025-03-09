@@ -22,12 +22,13 @@ async def validate_pass(message: Message, bot: Bot, state: FSMContext) -> Any:
     path_to_picture = f'staticfiles/images/{user_id}.png'
     await bot.download_file(picture_to_validate.file_path, path_to_picture)
     await give_full_access(user_id)
-    await message.answer('Спасибо, ваш скриншот находится на проверке')
-    await asyncio.sleep(7200)
+    await state.clear()
+
+    await message.answer(messages_for_users.SCREENSHOT_IS_BEING_PROCESSED_MESSAGE)
+    await asyncio.sleep(57600)
 
     await send_stamped_ticket_to_eligible_user(message)
     await send_personal_link(message)
-    await state.clear()
 
 
 @router.message(StateFilter(FSMRegisterUser.send_valid_pass))
