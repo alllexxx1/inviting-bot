@@ -1,3 +1,4 @@
+import asyncio
 from typing import Any
 
 from aiogram import Bot, F, Router
@@ -21,6 +22,9 @@ async def validate_pass(message: Message, bot: Bot, state: FSMContext) -> Any:
     path_to_picture = f'staticfiles/images/{user_id}.png'
     await bot.download_file(picture_to_validate.file_path, path_to_picture)
     await give_full_access(user_id)
+    await message.answer('Спасибо, ваш скриншот находится на проверке')
+    await asyncio.sleep(7200)
+
     await send_stamped_ticket_to_eligible_user(message)
     await send_personal_link(message)
     await state.clear()
